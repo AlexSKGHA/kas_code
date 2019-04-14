@@ -1,0 +1,102 @@
+public class LibGame2D {
+	
+	/*
+	 * Снизу написан код для создания графика.
+	 * На нем можно делать графики, соответсвтенно, игры, рисунки и 
+	 * то, что ты придумаешь еще.
+	 * В код я добавлю, наверное, риствание окружностей, квадратов, прямоугольников
+	 * ромбов и что-нибудь еще.
+	 * Конструктор класса вносит в массив term координаты расположения минусов на плоскости, а также указывает её разрешение.
+	 * По умолчане установлено разрешение 50x15.
+	 * Массив term действует как отрезок, который можно поделить и сделать из него, собственно, плоскость.
+	 * Метод setX(кол-во точек на оси X).
+	 * Метод setY(кол-во точек на оси Y).
+	 * Методы getX() и getY() возвращет кол-во точек на осях X и Y.
+	 * Метод draw() рисует плоскость по заданному разрешению и заданным координатам точек.
+	 * Метод drawBackground(STAR или PLUS или MINUS или SPACE) рисует фон плоскости.
+	 * Метод clear() очищает плоскость от всего, соответсвенно она становится невидимой.
+	 * Метод setPixel(координата X, координата Y, STAR или PLUS или MINUS или SPACE) добавляет в массив term соответсвенные координаты точек на плоскости.
+	 * Метод getPixel(координата X, координата Y) возвращает точку.
+	 * ...................................................................................................................................................
+	 * Метод engineDrawing() творит плоскость по координатам из массива term.
+	 *....................................................................................................................................................
+	 * Сделано программистом Aleser | Канал на YouTube: 'AleserGaming'
+	 */
+	
+	public static final int STAR = 1;
+	public static final int PLUS = 2;
+	public static final int MINUS = 3;
+	public static final int SPACE = 4;
+	private int x;
+	private int y;
+	private int[] term = new int[16000];
+	private int termFor = 0;
+	private int termInt = 0;
+	
+	LibGame2D() {
+		x = 50;
+		y = 15;
+		for (int t = 0; t < 16000; t++) {
+			term[t] = 3;
+		}
+	}
+	public void setX(int X) {
+		x = X;
+	}
+	public void setY(int Y) {
+		y = Y;
+	}
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void draw() {
+		engineDrowing();
+	}
+	public void drawBackground(int pixel) {
+		for (int t = 0; t < 16000; t++) {
+			term[t] = pixel;
+		}
+		draw();
+	}
+	public void clear() {
+		for (int t = 0; t < 16000; t++) {
+			term[t] = SPACE;
+		}
+		draw();
+	}
+	public void setPixel(int X, int Y, int pixel) {
+		termInt = Y - 1;
+		termInt = termInt * x;
+		termInt = termInt + X;
+		term[termInt - 1] = pixel;
+	}
+	public int getPixel(int X, int Y) {
+		termInt = Y - 1;
+		termInt = termInt * x;
+		termInt = termInt + X;
+		return term[termInt - 1];
+	}
+	
+	private void engineDrowing() {
+		for (int i = 0; i < y; i++) {
+			for (int ii = 0; ii < x; ii++) {
+				if (term[termFor] == STAR) {
+					System.out.print("*");
+				} else if (term[termFor] == PLUS) {
+					System.out.print("+");
+				} else if (term[termFor] == MINUS) {
+					System.out.print("-");
+				} else if (term[termFor] == SPACE) {
+					System.out.print(" ");
+				} else {
+			
+				}
+				termFor++;
+			}
+			System.out.println();
+		}
+	}
+}
