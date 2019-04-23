@@ -2,10 +2,10 @@ import java.util.Random;
 
 class CoreGenPassword {
     //Объявление переменных.
-    String password;
-    static String Symbols = "%*)?@#$~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; //Из этих символов делается пароль.
-    int i;
-    int randomnum;
+    private String password;
+    private String Symbols = "%*)?@#$~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; //Из этих символов делается пароль.
+    private int i;
+    private int randomnum;
     
     public String CoreGenPassword(int sizePassword, boolean useSings, boolean useBigLetters,boolean useSmallLetters, boolean useNumbers) {
         //Обнуление переменных для повторного их использования.
@@ -46,5 +46,9 @@ class CoreGenPassword {
             password += Symbols.charAt(randomnum);
         }
         return password; //Возвращение переменной password как готовый пароль.
+    }
+
+    public String getSymbols() {
+        return Symbols;
     }
 }
