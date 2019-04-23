@@ -4,9 +4,11 @@ public class Engine {
 
     private char [] flat;
 
-    private int i = 0;
+    private boolean running;
 
-    private int ii = 0;
+    private int FPS;
+
+    private int wrap;
 
     private int x;
 
@@ -16,17 +18,12 @@ public class Engine {
 
     private final char DEFAULT_SYMBOL = ' ';
 
-    private final int defaultSizeFlat = 81;
-
-    private final int defaultX = 9;
-
-    private final int defaultY = 9;
-
-    public Engine() {
-
-        x = defaultX;
-        y = defaultY;
-        xy = defaultSizeFlat;
+    {
+        FPS = 0;
+        wrap = 30;
+        x = 9;
+        y = 9;
+        xy = 81;
 
         flat = new char[xy];
 
@@ -35,136 +32,93 @@ public class Engine {
         }
     }
 
-    public Engine(char symbol) {
+    private Engine() {}
 
-        x = defaultX;
-        y = defaultY;
-        xy = defaultSizeFlat;
+    public static Engine getEngine() {
+        return new Engine();
+    }
 
-        flat = new char[xy];
-
-        for (int i = 0; i < flat.length; i++) {
-            flat[i] = symbol;
+    private void wrapping(boolean running) {
+        if (running) {
+            for (int i = 0; i < wrap; i++) {
+                System.out.println();
+            }
         }
     }
 
-    public Engine(int X, int Y) {
-
-        if (X > 0 && Y > 0 && X <= 250 && Y <= 50) {
-            x = X;
-            y = Y;
-            xy = X * Y;
-        } else {
-            x = defaultX;
-            y = defaultY;
-            xy = defaultSizeFlat;
-        }
+    public void formatEngine(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.xy = x * y;
 
         flat = new char[xy];
 
         for (int i = 0; i < flat.length; i++) {
             flat[i] = DEFAULT_SYMBOL;
         }
-    }
-
-
-
-    public Engine(int X, int Y, char symbol) {
-
-        if (X > 0 && Y > 0 && X <= 250 && Y <= 50) {
-            x = X;
-            y = Y;
-            xy = X * Y;
-        } else {
-            System.out.println(0);
-            x = defaultX;
-            y = defaultY;
-            xy = defaultSizeFlat;
-        }
-
-        flat = new char[xy];
-
-        for (int i = 0; i < flat.length; i++) {
-            flat[i] = symbol;
-        }
-    }
-
-    public void calculateXY() {
-        xy = x * y;
     }
 
     public void draw() {
-        for (i = 0; i < xy; i++) {
-            for (ii = 0; ii < x; ii++) {
-                System.out.print(flat[i] + " ");
-                i++;
+        try {
+            running = true;
+            while (running) {
+                for (int i = 0; i < xy; i++) {
+                    for (int ii = 0; ii < x; ii++) {
+                        System.out.print(flat[i] + " ");
+                        i++;
+                    }
+                    i--;
+                    System.out.println();
+                }
+                Thread.sleep(FPS);
+                wrapping(running);
             }
-            i--;
-            System.out.println();
+        } catch (Exception ex) {
+
         }
     }
 
-    public boolean editFlat(int X, int Y, char symbol) {
-
-        if (X >= 0 && Y >= 0 && X <= 250 && Y <= 50) {
-            try {
-                flat[Y * x + X] = symbol;
-                return true;
-            } catch (Exception ex) {
-                return false;
-            }
-        } else {
-            return false;
-        }
-
-    }
-
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public int getXY() {
-        return this.xy;
-    }
-
-    public char getDefaultSymbol() {
-        return this.DEFAULT_SYMBOL;
-    }
-
-    public int getDefaultX() {
-        return this.defaultX;
-    }
-
-    public int getDefaultY() {
-        return this.defaultY;
+    public void editFlat(int X, int Y, char symbol) {
+        flat[Y * x + X] = symbol;
     }
 
     public char[] getFlat() {
-        return this.flat;
+        return flat;
     }
 
-    public boolean setX(int X) {
-        if (X > 0 && X <= 250) {
-            this.x = X;
-            calculateXY();
-            return true;
-        } else {
-            return false;
-        }
-
+    public int getX() {
+        return x;
     }
 
-    public boolean setY(int Y) {
-        if (Y > 0 && Y <= 50) {
-            this.y = Y;
-            calculateXY();
-            return true;
-        } else {
-            return false;
-        }
+    public int getY() {
+        return y;
+    }
+
+    public int getXY() {
+        return xy;
+    }
+
+    public int getFPS() {
+        return FPS;
+    }
+
+    public int getWrap() {
+        return wrap;
+    }
+
+    public void stopRunning() {
+        running = false;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setFPS(int milliseconds) {
+        FPS = milliseconds;
+    }
+
+    public void setWrap(int wrap) {
+        this.wrap = wrap;
     }
 }
