@@ -1,18 +1,14 @@
 import java.util.Random;
 
 class CoreGenPassword {
-    //Объявление переменных.
-    private String password;
-    private String Symbols = "%*)?@#$~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; //Из этих символов делается пароль.
-    private int i;
-    private int randomnum;
-    
+
+    private Random random = new Random();
+    private StringBuilder password = new StringBuilder();
+    private final StringBuilder Symbols = new StringBuilder("%*)?@#$~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+
     public String CoreGenPassword(int sizePassword, boolean useSings, boolean useBigLetters,boolean useSmallLetters, boolean useNumbers) {
-        //Обнуление переменных для повторного их использования.
-        Random random = new Random();
-        password = "";
-        i = 0;
-        randomnum = 0;
+
+        int i = 0;
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////Великолепное Ядро генерации паролей/////////////////////////////////   
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -22,33 +18,28 @@ class CoreGenPassword {
         //После эти символы присваиваются к перменной password. В конце цикла получается готовый пароль.
         while (i != sizePassword) {
             i++;
-            randomnum = random.nextInt(Symbols.length()); 
-            
-            //              Условия ядра.             //
-            
-            if (useSings == false && randomnum < 8) {
-                i -= 1;
-                continue;
-            }
-            if (useBigLetters == false && randomnum > 7 && randomnum < 34) {
-                i -= 1;
-                continue;
-            }
-            if (useSmallLetters == false && randomnum > 33 && randomnum < 60) {
-                i -= 1;
-                continue;
-            }
-            if (useNumbers == false && randomnum > 59) {
-                i -= 1;
-                continue;
-            }
-            //Формирование пароля.
-            password += Symbols.charAt(randomnum);
-        }
-        return password; //Возвращение переменной password как готовый пароль.
-    }
+            int randomnum = random.nextInt(Symbols.length());
 
-    public String getSymbols() {
-        return Symbols;
+            //              Условия ядра.             //
+
+            if (!useSings && randomnum < 8) {
+                i -= 1;
+                continue;
+            }
+            if (!useBigLetters && randomnum > 7 && randomnum < 34) {
+                i -= 1;
+                continue;
+            }
+            if (!useSmallLetters && randomnum > 33 && randomnum < 60) {
+                i -= 1;
+                continue;
+            }
+            if (!useNumbers && randomnum > 59) {
+                i -= 1;
+                continue;
+            }
+            password.append(Symbols.charAt(randomnum));
+        }
+        return password.toString();
     }
 }
