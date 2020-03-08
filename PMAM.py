@@ -31,7 +31,7 @@ welcome()
         # return h + ':' + m + zero
         
 def getAMPM(hour, minutes):
-    """return list of this form [time, time, period, (*digitalTime)"""
+    """return list of this form [12-hourTime, 12-hourTime, period, (24-hourTime, 24-hourTime)"""
     time = []
     
     minutes = str(minutes)
