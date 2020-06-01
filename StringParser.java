@@ -18,8 +18,9 @@ public class StringParser {
      *
      * */
 
+    public static final String SPACE = " ";
 
-    public String getCommand(String str) {
+    public static String getCommand(String str) {
         String result = "";
         for (int i = 0; i < str.length(); i++) {
             if (!str.substring(i,i+1).equals(" ")) {
@@ -31,7 +32,7 @@ public class StringParser {
         return result;
     }
 
-    public String[] getArguments(String str) {
+    public static String[] getArguments(String str) {
 
         String[] arguments;
 
@@ -72,5 +73,20 @@ public class StringParser {
             }
         }
         return arguments;
+    }
+
+    public static String[] getBalancedEnumeration (int start, int end) {
+
+        int maxLength = NumberParser.getNumOfDigits(end);
+        int arrayLength = end - start;
+        String[] enums = new String[arrayLength];
+        int size;
+        int num;
+        for (int i = 0; i < arrayLength; i++) {
+            num = i + start;
+            size = NumberParser.getNumOfDigits(num);
+            enums[i] = num + SPACE.repeat(maxLength - size);
+        }
+        return enums;
     }
 }
