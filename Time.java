@@ -1,3 +1,5 @@
+package kascode;
+
 public class Time {
 
     public static final String AM = "AM";
@@ -6,10 +8,10 @@ public class Time {
     public static final byte DEFAULT_HOUR = 0;
     public static final byte DEFAULT_MINUTES = 0;
 
-    private byte hour;
-    private byte minutes;
-    private byte hour12;
-    private String period;
+    private final byte hour;
+    private final byte minutes;
+    private final byte hour12;
+    private final String period;
 
     public Time (byte hour, byte minutes) {
 
@@ -31,11 +33,6 @@ public class Time {
             hour12 = hour;
             period = Time.AM;
         }
-    }
-
-    public static void main(String[] args) {
-        Time time = new Time((byte) 0, (byte) 0);
-        System.out.println(time.getHour12(false) + " " + time.getPeriod());
     }
 
     public String getHour (boolean normalized) {
