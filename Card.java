@@ -17,8 +17,8 @@ public class Card {
     public static final int KING = 7;
     public static final int ACE = 8;
 
-    int suit;
-    int rank;
+    private final int suit;
+    private final int rank;
 
     public Card(int suit, int rank) {
         this.suit = suit;
