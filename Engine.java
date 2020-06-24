@@ -1,5 +1,6 @@
 //The FunctionConsoleEngine
 
+@Deprecated
 public class Engine {
 
     private char [] flat;
