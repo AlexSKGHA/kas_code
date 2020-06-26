@@ -3,13 +3,13 @@ package kascode;
 import java.util.Random;
 
 public class PasswordGenerator {
-    
+
     public static byte DEFAULT_PASSWORD_LENGTH = 16;
-    
+
     public static boolean[] DEFAULT_CONDITIONS = {
       false, true, true, true
     };
-    
+
     public static final String[] symbols = {
             "%*)?@#$~\"'",
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -46,5 +46,9 @@ public class PasswordGenerator {
         }
 
         return password.toString();
+    }
+    
+    public String make() {
+        return make(DEFAULT_PASSWORD_LENGTH,DEFAULT_CONDITIONS);
     }
 }
