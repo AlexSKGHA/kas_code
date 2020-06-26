@@ -15,13 +15,8 @@ public class Time {
 
     public Time (byte hour, byte minutes) {
 
-        if ((hour > 23) || (hour < 0)) {
-            hour = DEFAULT_HOUR;
-        }
-
-        if ((minutes > 59) || (minutes < 0)) {
-            minutes = DEFAULT_MINUTES;
-        }
+        if (!isValidHour(hour)) hour = DEFAULT_HOUR;
+        if (!isValidMinute(minutes)) minutes = DEFAULT_MINUTES;
 
         this.hour = hour;
         this.minutes = minutes;
@@ -33,6 +28,14 @@ public class Time {
             hour12 = hour;
             period = Time.AM;
         }
+    }
+
+    public static boolean isValidHour(byte hour) {
+        return (hour >= 0) && (hour <= 23);
+    }
+
+    public static boolean isValidMinute(byte minute) {
+        return (minute >= 0) && (minute <= 59);
     }
 
     public String getHour (boolean normalized) {
