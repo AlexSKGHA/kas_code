@@ -1,3 +1,5 @@
+package kascode;
+
 public class StringParser {
 
     /**
