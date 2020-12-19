@@ -89,4 +89,65 @@ public class StringParser {
         }
         return enums;
     }
+    
+    	public static int obtainNumberOfWords(String str) {
+
+		int numberOfSpaces = obtainNumberOfSpaces(str);
+		int endSpaces = 1;
+
+		for (int i = 0; i < str.length(); i += str.length() - 1) {
+			if (str.charAt(i) == ' ') {
+				endSpaces--;
+			}
+		}
+
+		return numberOfSpaces + endSpaces;
+	}
+
+	private static int obtainNumberOfSpaces(String str) {
+		int numberOfSpaces = 0;
+
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) == ' ') {
+				numberOfSpaces++;
+				for (; i < str.length(); i++) {
+					if (str.charAt(i) != ' ') {
+						i--;
+						break;
+					}
+				}
+			}
+		}
+		return numberOfSpaces;
+	}
+
+	private static int[][] findStringSubstringMethodWordCoordinates(String str) {
+
+		int[][] cords = new int[obtainNumberOfWords(str)][2];
+		int wordIndex = -1;
+
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) != ' ') {
+				wordIndex++;
+				cords[wordIndex][0] = i;
+
+				for (; i < str.length(); i++) {
+					if (str.charAt(i) == ' ') {
+						break;
+					}
+				}
+				cords[wordIndex][1] = i;
+			}
+		}
+		return cords;
+	}
+
+	public static String[] getWords(String str) {
+		int[][] cords = findStringSubstringMethodWordCoordinates(str);
+		String[] words = new String[cords.length];
+		for (int i = 0; i < words.length; i++) {
+			words[i] = str.substring(cords[i][0], cords[i][1]);
+		}
+		return words;
+	}
 }
