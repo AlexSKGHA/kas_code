@@ -1,3 +1,5 @@
+package venom.kascode;
+
 public class StringParser {
 
     /**
@@ -16,10 +18,20 @@ public class StringParser {
      * ЧТОБЫ УКАЗАТЬ ПРОБЕЛ В АРГУМЕНТЕ, НУЖНО ПЕРЕД ПРОБЕЛОМ ПОСТАВИТЬ
      * В КОДЕ ПРОГРАММЫ СИМВОЛЫ \\ ИЛИ ПРИ ВВОДЕ С КОНСОЛИ \
      *
+     * 5/21/2022 Edit: Java 1.8 is class written for.
+     * The class is used to deal with strings in a particular manner.
+     * The idea of implementing this code was to get additional tools when writing a console-like programs,
+     * to parse commands, arguments and so on.
+     * Attributes of this class might be modified or deprecated in the future. And new ones will be added til I run out
+     * of ideas or get skilled enough to use built-in libraries.
      * */
+
+    public static void main(String[] args) {
+    }
 
     public static final String SPACE = " ";
 
+    @Deprecated
     public static String getCommand(String str) {
         String result = "";
         for (int i = 0; i < str.length(); i++) {
@@ -32,6 +44,7 @@ public class StringParser {
         return result;
     }
 
+    @Deprecated
     public static String[] getArguments(String str) {
 
         String[] arguments;
@@ -75,24 +88,25 @@ public class StringParser {
         return arguments;
     }
 
-    public static String[] getBalancedEnumeration (int start, int end) {
+//    @Deprecated
+//    public static String[] getBalancedEnumeration (int start, int end) {
+//
+//        int maxLength = NumberParser.getNumOfDigits(end);
+//        int arrayLength = end - start;
+//        String[] enums = new String[arrayLength];
+//        int size;
+//        int num;
+//        for (int i = 0; i < arrayLength; i++) {
+//            num = i + start;
+//            size = NumberParser.getNumOfDigits(num);
+//            enums[i] = num + SPACE.repeat(maxLength - size);
+//        }
+//        return enums;
+//    }
+    @Deprecated
+    public static int obtainNumberOfWords(String str) {
 
-        int maxLength = NumberParser.getNumOfDigits(end);
-        int arrayLength = end - start;
-        String[] enums = new String[arrayLength];
-        int size;
-        int num;
-        for (int i = 0; i < arrayLength; i++) {
-            num = i + start;
-            size = NumberParser.getNumOfDigits(num);
-            enums[i] = num + SPACE.repeat(maxLength - size);
-        }
-        return enums;
-    }
-    
-    	public static int obtainNumberOfWords(String str) {
-
-		int numberOfSpaces = obtainNumberOfSpaces(str);
+        int numberOfSpaces = obtainNumberOfSpaces(str);
 		int endSpaces = 1;
 
 		for (int i = 0; i < str.length(); i += str.length() - 1) {
@@ -104,6 +118,7 @@ public class StringParser {
 		return numberOfSpaces + endSpaces;
 	}
 
+    @Deprecated
 	private static int obtainNumberOfSpaces(String str) {
 		int numberOfSpaces = 0;
 
@@ -121,6 +136,7 @@ public class StringParser {
 		return numberOfSpaces;
 	}
 
+    @Deprecated
 	private static int[][] findStringSubstringMethodWordCoordinates(String str) {
 
 		int[][] cords = new int[obtainNumberOfWords(str)][2];
@@ -150,4 +166,99 @@ public class StringParser {
 		}
 		return words;
 	}
+
+    /**
+     * Counts segments comprised of non-space characters.
+     */
+    public static int countWords(String line) {
+
+        String trimmedLine = trimLine(line);
+        int length = trimmedLine.length();
+
+        if (length < 1) {
+            return 0;
+        }
+
+        int gapOccurrences = 0;
+        boolean isSpaceDetected = false;
+        char currentChar;
+
+        for (int i = 0; i < length; i++) {
+            currentChar = trimmedLine.charAt(i);
+            if (currentChar != ' ') {
+                isSpaceDetected = false;
+            }
+            if ((currentChar == ' ') && !isSpaceDetected) {
+                isSpaceDetected = true;
+                gapOccurrences++;
+            }
+        }
+        return gapOccurrences + 1;
+    }
+
+    /**
+     * Removes spaces up to a character that is not space.
+     * Applied to both ends of a string.
+     */
+    public static String trimLine(String line) {
+
+        int length = line.length();
+        int startIndex = 0;
+        int endIndex = 0;
+        boolean isStartLocked = false;
+        boolean isEndLocked = false;
+        for (int i = 0; i < length; i++) {
+            if (!isStartLocked) {
+                if (line.charAt(i) != 32) {
+                    isStartLocked = true;
+                    startIndex = i;
+                }
+            }
+            if (!isEndLocked) {
+                if (line.charAt(length - 1 - i) != 32) {
+                    isEndLocked = true;
+                    endIndex = length - i;
+                }
+            }
+            if(isStartLocked && isEndLocked) {
+                break;
+            }
+        }
+        return line.substring(startIndex, endIndex);
+    }
+
+    /**
+     * Returns an array where each element holds one single word.
+     * line parameter value is split into words that then are represented as an array.
+     * Parameter line could be empty string which returns an array of a size 0.
+     */
+    public static String[] intoWords(String line) {
+
+        String trimmedLine = trimLine(line);
+        int length = trimmedLine.length();
+        if (length < 1) {
+            return new String[0];
+        }
+        String[] words = new String[countWords(trimmedLine)];
+
+        int startIndex = 0;
+        int wordCount = 0;
+        boolean isInWord = true;
+        char currentChar;
+        for (int i = 0; i < length; i++) {
+            currentChar = trimmedLine.charAt(i);
+            if ((currentChar != 32) && !isInWord) {
+                isInWord = true;
+                startIndex = i;
+            }
+            if ((currentChar == 32) && isInWord) {
+                isInWord = false;
+                words[wordCount] = trimmedLine.substring(startIndex, i);
+                wordCount++;
+            }
+        }
+        words[wordCount] = trimmedLine.substring(startIndex, length);
+
+        return words;
+    }
 }
