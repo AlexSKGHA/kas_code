@@ -26,9 +26,6 @@ public class StringParser {
      * of ideas or get skilled enough to use built-in libraries.
      * */
 
-    public static void main(String[] args) {
-    }
-
     public static final String SPACE = " ";
 
     @Deprecated
@@ -88,21 +85,29 @@ public class StringParser {
         return arguments;
     }
 
-//    @Deprecated
-//    public static String[] getBalancedEnumeration (int start, int end) {
-//
-//        int maxLength = NumberParser.getNumOfDigits(end);
-//        int arrayLength = end - start;
-//        String[] enums = new String[arrayLength];
-//        int size;
-//        int num;
-//        for (int i = 0; i < arrayLength; i++) {
-//            num = i + start;
-//            size = NumberParser.getNumOfDigits(num);
-//            enums[i] = num + SPACE.repeat(maxLength - size);
-//        }
-//        return enums;
-//    }
+    @Deprecated
+    public static String[] getBalancedEnumeration (int start, int end) {
+
+        int maxLength = NumberParser.getNumOfDigits(end);
+        int arrayLength = end - start;
+        String[] enums = new String[arrayLength];
+        int size;
+        int num;
+        for (int i = 0; i < arrayLength; i++) {
+            num = i + start;
+            size = NumberParser.getNumOfDigits(num);
+            enums[i] = num + repeat(SPACE, maxLength - size);
+        }
+        return enums;
+    }
+
+    public static String repeat(String line, int times) {
+        String result = "";
+        for (int i = 0; i < times; i++) {
+            result += line;
+        }
+        return result;
+    }
     @Deprecated
     public static int obtainNumberOfWords(String str) {
 
