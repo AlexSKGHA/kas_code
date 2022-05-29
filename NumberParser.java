@@ -1,4 +1,4 @@
-package kascode;
+package lcb.kascode;
 
 public class NumberParser {
 
@@ -64,4 +64,34 @@ public class NumberParser {
     public static int getNumOfDigits (int number) {
         return getNumOfDigits(number, true);
     }
+    
+    /**
+     * Converts long type decimal to base 2.
+     */
+    public static String toBase2(long number) {
+		
+		StringBuilder binary = new StringBuilder();
+		int power = 0;
+		int previousPower = 0;
+		while (number > 1) {
+			previousPower = power;
+			for (int i = 1; Math.pow(2, i) <= number; i++) {
+				power = i;
+			}
+			
+			for (int i = previousPower - 1; i > power; i--) {
+				binary.append('0');
+			}
+			
+			binary.append('1');
+			number = number - (long) Math.pow(2, power);
+		}
+		
+		for (int i = power; i > 1; i--) {
+			binary.append('0');
+		}
+		
+		binary.append(number);
+		return binary.toString();
+	}
 }
