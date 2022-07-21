@@ -112,13 +112,4 @@ public class Spammer {
 		secondRow = null;
 		isClosed = true;
 	}
-	
-	public static void main(String[] args) {
-		try {
-			DatagramSocket socket = new DatagramSocket();
-			Spammer spammer = new Spammer("Hello World", "Second Row", socket);
-			spammer.deploy();
-			spammer.close();
-		} catch (Exception ex) {}
-	}
 }
